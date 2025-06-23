@@ -6,22 +6,25 @@ class Personaje:
 
     @property  ##permite consultar el estado
     def estado(self):
-        print(f"El nombre es: {self.nombre}, su nivel es: {self.nivel} y su experiencia es: {self.experiencia}")
+        return f"El nombre es: {self.nombre}, su nivel es: {self.nivel} y su experiencia es: {self.experiencia}"
 
     @estado.setter ##permite reasignar experiencias positivas o negativas ya que en fx de estas subes o bajas de nivel
     def estado(self,exp): ##Positiva: suma y sube nivel cada vez que supere múltiplos de 100; Negativa: resta y baja nivel si la experiencia queda negativa
-        total_exp=self.experiencia + exp
+        total_exp = self.experiencia + exp
 
-        while total_exp>=100: ##para subir de experiencias
+        while total_exp >= 100: ##para subir de experiencias
             self.nivel += 1
             total_exp -= 100
-        while total_exp<0 and self.nivel > 1: ## para bajar de experiencias
+        
+        while total_exp < 0 and self.nivel > 1: ## para bajar de experiencias
             self.nivel -=1
             total_exp += 100
 
-        if self.nivel == 1:
-            self.experiencia == 0
-        
+        if self.nivel == 1 and total_exp < 0:
+            total_exp = 0
+
+        self.experiencia = total_exp 
+               
     def __lt__(self, orco): ##sobrecarga para método menor que
         return self.nivel < orco.nivel
     
